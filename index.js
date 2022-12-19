@@ -8,7 +8,9 @@ require("dotenv").config();
 async function getVersion(repo, owner, env, preRelease, ghToken) {
   try {
     const oct = octokit(ghToken);
-    const res = await oct.request(`GET /repos/${owner}/${repo}/releases`);
+    const res = await oct.request(`GET /repos/${owner}/${repo}/releases`, {
+      per_page: 100,
+    });
     const sorted = sortBy(res.data, "created_at").reverse();
     let data = sorted;
 
