@@ -1,0 +1,22 @@
+name: "Get latest version"
+description: "Get the latest version of a repo using the Github API"
+inputs:
+  owner:
+    description: "Repository owner"
+    required: true
+    default: "Skiddle"
+  repo:
+    description: "Repository name"
+    required: true
+    default: ""
+  environment:
+    description: "The environment to get the version for, leave blank to get latest of any envs. Usually named after the branch e.g. dev, alpha, master"
+    required: false
+  include-pre-release:
+    description: "Boolean - whether or not to include pre-releases when working out the latest release"
+outputs:
+  version: # id of output
+    description: "The latest version"
+runs:
+  using: "node16"
+  main: "dist/index.js"
