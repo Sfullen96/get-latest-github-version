@@ -1,7 +1,7 @@
-import { Octokit } from "@octokit/rest";
+const { Octokit } = require("@octokit/rest");
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
 
-export default octokit;
+module.exports = { octokit };

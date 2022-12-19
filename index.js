@@ -1,7 +1,7 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const sortBy = require("lodash/sortBy");
-const octokit = require("./octokit");
+const { octokit } = require("./octokit");
 
 async function getVersion() {
   try {
