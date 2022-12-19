@@ -1,7 +1,10 @@
 const { Octokit } = require("@octokit/rest");
+require("dotenv").config();
 
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
-});
+function octokit(token) {
+  return new Octokit({
+    auth: token || process.env.GITHUB_TOKEN,
+  });
+}
 
 module.exports = { octokit };
