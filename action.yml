@@ -15,6 +15,9 @@ inputs:
   include-pre-release:
     description: "Boolean - whether or not to include pre-releases when working out the latest release"
     required: true
+  github-token:
+    description: "Github token"
+    required: true
 outputs:
   version: # id of output
     description: "The latest version"
