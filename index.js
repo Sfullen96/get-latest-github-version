@@ -1,7 +1,7 @@
 import core from "@actions/core";
 import github from "@actions/github";
 import sortBy from "lodash/sortBy";
-import octokit from "../../Utils/github/octokit";
+import octokit from "./octokit";
 
 try {
   const repo = core.getInput("repo");

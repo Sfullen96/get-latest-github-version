@@ -14,8 +14,7 @@ inputs:
     required: false
   include-pre-release:
     description: "Boolean - whether or not to include pre-releases when working out the latest release"
-    required: false
-    default: true
+    required: true
 outputs:
   version: # id of output
     description: "The latest version"
