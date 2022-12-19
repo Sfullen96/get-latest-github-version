@@ -16704,13 +16704,14 @@ async function getVersion(repo, owner, env, preRelease, ghToken) {
     const res = await oct.request(`GET /repos/${owner}/${repo}/releases`, {
       per_page: 100,
     });
+
     const sorted = sortBy(res.data, "created_at").reverse();
     let data = sorted;
 
     if (!preRelease) {
       data = sorted.filter(({ prerelease }) => !prerelease);
     }
-    console.log(data);
+
     let version = data.filter(
       ({ target_commitish: targetCommitish }) => targetCommitish === env
     )[0]?.name;
@@ -16728,7 +16729,6 @@ async function getVersion(repo, owner, env, preRelease, ghToken) {
     const payload = JSON.stringify(github.context.payload, undefined, 2);
     console.log(`The event payload: ${payload}`);
   } catch (error) {
-    console.log(error);
     core.setFailed(error.message);
   }
 }
