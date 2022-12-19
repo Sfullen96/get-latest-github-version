@@ -3,8 +3,6 @@ const github = require("@actions/github");
 const sortBy = require("lodash/sortBy");
 const { octokit } = require("./octokit");
 
-require("dotenv").config();
-
 async function getVersion(repo, owner, env, preRelease, ghToken) {
   try {
     const oct = octokit(ghToken);

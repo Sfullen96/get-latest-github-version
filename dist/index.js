@@ -16696,8 +16696,6 @@ const github = __nccwpck_require__(4662);
 const sortBy = __nccwpck_require__(593);
 const { octokit } = __nccwpck_require__(6081);
 
-(__nccwpck_require__(8180).config)();
-
 async function getVersion(repo, owner, env, preRelease, ghToken) {
   try {
     const oct = octokit(ghToken);
