@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Skiddle/get-latest-version.git"
+    "url": "git+https://github.com/Sfullen96/get-latest-version.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Skiddle/get-latest-version/issues"
+    "url": "https://github.com/Sfullen96/get-latest-version/issues"
   },
-  "homepage": "https://github.com/Skiddle/get-latest-version#readme",
+  "homepage": "https://github.com/Sfullen96/get-latest-version#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
