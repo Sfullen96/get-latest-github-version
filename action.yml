@@ -4,7 +4,7 @@ inputs:
   owner:
     description: "Repository owner"
     required: true
-    default: "Skiddle"
+    default: ""
   repo:
     description: "Repository name"
     required: true
