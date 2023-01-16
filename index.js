@@ -1,47 +1,71 @@
-const core = require("@actions/core");
-const github = require("@actions/github");
-const sortBy = require("lodash/sortBy");
-const { octokit } = require("./octokit");
+#!/usr/bin/env node
 
-async function getVersion(repo, owner, env, preRelease, ghToken) {
-  try {
-    const oct = octokit(ghToken);
-    const res = await oct.request(`GET /repos/${owner}/${repo}/releases`, {
-      per_page: 100,
-    });
+const { parseArgs } = require("node:util");
+const { getVersion } = require("./getVersion");
 
-    const sorted = sortBy(res.data, "created_at").reverse();
-    let data = sorted;
+const [major, minor] = process.version.replace("v", "").split(".");
+const MIN_MAJOR = 16;
+const MIN_MINOR = 17;
+const error =
+  "Node version must be a minimum of " +
+  "v" +
+  MIN_MAJOR +
+  "." +
+  MIN_MINOR +
+  ".0.";
 
-    if (!preRelease) {
-      data = sorted.filter(({ prerelease }) => !prerelease);
-    }
-
-    let version = data.filter(
-      ({ target_commitish: targetCommitish }) => targetCommitish === env
-    )[0]?.name;
-
-    if (!version) {
-      version = sorted[0].name;
-    }
-
-    if (!version) {
-      version = "Unknown";
-    }
-
-    core.setOutput("version", version);
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2);
-    console.log(`The event payload: ${payload}`);
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+if (Number(major) < MIN_MAJOR) {
+  throw new Error(error);
 }
 
-const repo = core.getInput("repo");
-const owner = core.getInput("owner");
-const env = core.getInput("environment") || "production";
-const preRelease = core.getInput("include-pre-release");
-const token = core.getInput("github-token");
+if (Number(major) === MIN_MAJOR && Number(minor) < MIN_MINOR) {
+  throw new Error(error);
+}
 
-getVersion(repo, owner, env, preRelease, token);
+const args = process.argv;
+const options = {
+  repo: {
+    type: "string",
+    short: "r",
+  },
+  owner: {
+    type: "string",
+    short: "o",
+  },
+  env: {
+    type: "string",
+    default: "main",
+  },
+  preRelease: {
+    type: "boolean",
+    default: false,
+  },
+  token: {
+    type: "string",
+    short: "t",
+  },
+};
+
+function throwError(field) {
+  throw new Error("Argument '" + field + "' is required");
+}
+
+const {
+  values: { repo, owner, env, preRelease, token },
+} = parseArgs({
+  args,
+  options,
+  allowPositionals: true,
+});
+
+if (!repo) {
+  return throwError("repo");
+}
+if (!owner) {
+  return throwError("owner");
+}
+if (!token) {
+  return throwError("token");
+}
+
+return getVersion(repo, owner, env, preRelease, token);
