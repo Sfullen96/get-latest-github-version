@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-const { parseArgs } = require("node:util");
 const { getVersion } = require("./getVersion");
 
 const [major, minor] = process.version.replace("v", "").split(".");
 const MIN_MAJOR = 16;
-const MIN_MINOR = 17;
+const MIN_MINOR = 15;
 const error =
   "Node version must be a minimum of " +
   "v" +
@@ -22,41 +21,52 @@ if (Number(major) === MIN_MAJOR && Number(minor) < MIN_MINOR) {
   throw new Error(error);
 }
 
-const args = process.argv;
-const options = {
-  repo: {
-    type: "string",
-    short: "r",
-  },
-  owner: {
-    type: "string",
-    short: "o",
-  },
-  env: {
-    type: "string",
-    default: "main",
-  },
-  preRelease: {
-    type: "boolean",
-    default: false,
-  },
-  token: {
-    type: "string",
-    short: "t",
-  },
-};
+let args = require("minimist")(process.argv.slice(2));
+const { repo } = args;
+const { owner } = args;
+const { env } = args;
+const { preRelease } = args;
+const { token } = args;
+
+if (minor >= 17) {
+  const { parseArgs } = require("node:util");
+
+  args = process.argv;
+  const options = {
+    repo: {
+      type: "string",
+      short: "r",
+    },
+    owner: {
+      type: "string",
+      short: "o",
+    },
+    env: {
+      type: "string",
+      default: "main",
+    },
+    preRelease: {
+      type: "boolean",
+      default: false,
+    },
+    token: {
+      type: "string",
+      short: "t",
+    },
+  };
+
+  const {
+    values: { repo, owner, env, preRelease, token },
+  } = parseArgs({
+    args,
+    options,
+    allowPositionals: true,
+  });
+}
 
 function throwError(field) {
   throw new Error("Argument '" + field + "' is required");
 }
-
-const {
-  values: { repo, owner, env, preRelease, token },
-} = parseArgs({
-  args,
-  options,
-  allowPositionals: true,
-});
 
 if (!repo) {
   return throwError("repo");
