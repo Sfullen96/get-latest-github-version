@@ -6,9 +6,13 @@ async function getVersion(repo, owner, env, preRelease, ghToken) {
     per_page: 100,
   });
 
-  const sorted = res.data.sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b).getTime()
-  );
+  const sorted = res.data
+    .sort(
+      (a, b) =>
+        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+    )
+    .reverse();
+
   let data = sorted;
 
   if (!preRelease) {
