@@ -1,27 +1,34 @@
 {
-  "name": "get-latest-version",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "get-latest-github-version",
+  "version": "1.2.0",
+  "main": "dist/index.js",
   "scripts": {
     "build": "ncc build index.js --license licenses.txt"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sfullen96/get-latest-version.git"
+    "url": "git+https://github.com/Sfullen96/get-latest-github-version.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Sfullen96/get-latest-version/issues"
+    "url": "https://github.com/Sfullen96/get-latest-github-version/issues"
   },
-  "homepage": "https://github.com/Sfullen96/get-latest-version#readme",
+  "homepage": "https://github.com/Sfullen96/get-latest-github-version#readme",
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1",
     "@octokit/rest": "^19.0.5",
     "dotenv": "^16.0.3",
-    "lodash": "^4.17.21"
+    "minimist": "^1.2.7"
+  },
+  "description": "",
+  "devDependencies": {
+    "@vercel/ncc": "^0.36.0"
+  },
+  "bin": {
+    "get-version": "./index.js"
+  },
+  "engines": {
+    "node": ">=16.7.0"
   }
 }
