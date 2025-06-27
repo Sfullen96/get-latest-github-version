@@ -31,7 +31,6 @@ async function getVersion(repo, owner, env, preRelease, ghToken) {
     version = "Unknown";
   }
 
-  process.stdout.write(version + "\n");
   return version;
 }
 
