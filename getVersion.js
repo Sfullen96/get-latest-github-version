@@ -1,4 +1,4 @@
-const { octokit } = require("./octokit");
+import { octokit } from "./octokit.js";
 
 async function getVersion(repo, owner, env, preRelease, ghToken) {
   const oct = octokit(ghToken);
@@ -31,8 +31,7 @@ async function getVersion(repo, owner, env, preRelease, ghToken) {
     version = "Unknown";
   }
 
-  process.stdout.write(version + "\n");
   return version;
 }
 
-module.exports = { getVersion };
+export { getVersion };

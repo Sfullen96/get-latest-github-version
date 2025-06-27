@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
-const { getVersion } = require("./getVersion");
+import { getVersion } from "./getVersion.js";
+import minimist from "minimist";
+import { parseArgs } from "node:util";
 
 const [major, minor] = process.version.replace("v", "").split(".");
-const MIN_MAJOR = 16;
-const MIN_MINOR = 15;
+const MIN_MAJOR = 18;
+const MIN_MINOR = 16;
 const error =
   "Node version must be a minimum of " +
   "v" +
@@ -21,17 +23,10 @@ if (Number(major) === MIN_MAJOR && Number(minor) < MIN_MINOR) {
   throw new Error(error);
 }
 
-let args = require("minimist")(process.argv.slice(2));
-const { repo } = args;
-const { owner } = args;
-const { env } = args;
-const { preRelease } = args;
-const { token } = args;
+let args = minimist(process.argv.slice(2));
+let { repo, owner, env, preRelease, token } = args;
 
 if (minor >= 17) {
-  const { parseArgs } = require("node:util");
-
-  args = process.argv;
   const options = {
     repo: {
       type: "string",
@@ -56,12 +51,25 @@ if (minor >= 17) {
   };
 
   const {
-    values: { repo, owner, env, preRelease, token },
+    values: {
+      repo: parsedRepo,
+      owner: parsedOwner,
+      env: parsedEnv,
+      preRelease: parsedPreRelease,
+      token: parsedToken,
+    },
   } = parseArgs({
-    args,
+    args: process.argv,
     options,
     allowPositionals: true,
   });
+
+  // Use parsed values
+  repo = parsedRepo;
+  owner = parsedOwner;
+  env = parsedEnv;
+  preRelease = parsedPreRelease;
+  token = parsedToken;
 }
 
 function throwError(field) {
@@ -69,13 +77,22 @@ function throwError(field) {
 }
 
 if (!repo) {
-  return throwError("repo");
+  throwError("repo");
 }
 if (!owner) {
-  return throwError("owner");
+  throwError("owner");
 }
 if (!token) {
-  return throwError("token");
+  throwError("token");
 }
 
-return getVersion(repo, owner, env, preRelease, token);
+// Wrap in IIFE to handle async
+(async () => {
+  try {
+    const result = await getVersion(repo, owner, env, preRelease, token);
+    console.log(result);
+  } catch (error) {
+    console.error("CATCH", error.message, error);
+    process.exit(1);
+  }
+})();
