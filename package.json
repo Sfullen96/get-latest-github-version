@@ -1,6 +1,6 @@
 {
   "name": "get-latest-github-version",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "main": "dist/index.js",
   "scripts": {
     "build": "ncc build index.js --license licenses.txt"
