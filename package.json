@@ -1,9 +1,9 @@
 {
   "name": "get-latest-github-version",
   "version": "3.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "ncc build cli.js -o dist --license licenses.txt"
+    "build": "ncc build cli.js -o dist --license licenses.txt && chmod +x dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -26,8 +26,8 @@
     "@vercel/ncc": "^0.36.0"
   },
   "bin": {
-    "get-version": "./cli.js",
-    "get-latest-github-version": "./cli.js"
+    "get-version": "./dist/index.js",
+    "get-latest-github-version": "./dist/index.js"
   },
   "engines": {
     "node": ">=16.7.0"
