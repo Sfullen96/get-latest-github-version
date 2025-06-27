@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { getVersion } = require("./getVersion");
+import { getVersion } from "./getVersion.js";
 
 // Parse arguments
 const args = process.argv.slice(2);
@@ -82,7 +82,12 @@ getVersion(
   params.env,
   params.preRelease,
   params.token
-).catch((error) => {
-  console.error("Error:", error.message);
-  process.exit(1);
-});
+)
+  .then((version) => {
+    // Output the version to stdout
+    console.log(version);
+  })
+  .catch((error) => {
+    console.error("Error:", error.message);
+    process.exit(1);
+  });

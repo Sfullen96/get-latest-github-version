@@ -1,5 +1,5 @@
-const { Octokit } = require("@octokit/rest");
-require("dotenv").config();
+import { Octokit } from "@octokit/rest";
+import "dotenv/config";
 
 function octokit(token) {
   return new Octokit({
@@ -7,4 +7,4 @@ function octokit(token) {
   });
 }
 
-module.exports = { octokit };
+export { octokit };

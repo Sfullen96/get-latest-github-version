@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Sfullen96/get-latest-github-version#readme",
   "dependencies": {
-    "@octokit/rest": "19.0.5",
+    "@octokit/rest": "22.0.0",
     "dotenv": "16.0.3",
     "minimist": "1.2.7"
   },
@@ -31,5 +31,6 @@
   },
   "engines": {
     "node": ">=16.7.0"
-  }
+  },
+  "type": "module"
 }
